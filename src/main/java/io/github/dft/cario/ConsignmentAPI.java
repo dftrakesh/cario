@@ -19,8 +19,7 @@ public class ConsignmentAPI extends CarioSdk {
     @SneakyThrows
     public QuoteResponseWrapper getQuote(QuoteRequest quoteRequest) {
         URI uri = baseUrl(CONSIGNMENT_ENDPOINT + "GetQuotes");
-        String quoteRequestString = objectMapper.writeValueAsString(quoteRequest);
-        HttpRequest post = post(uri, quoteRequestString);
+        HttpRequest post = post(uri, quoteRequest);
 
         return getRequestWrapped(post, QuoteResponseWrapper.class);
     }

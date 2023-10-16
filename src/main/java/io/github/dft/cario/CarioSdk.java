@@ -19,7 +19,7 @@ import static io.github.dft.cario.constantcode.ConstantCodes.TOKEN_TYPE_BEARER;
 
 public class CarioSdk {
 
-    public ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
     protected HttpClient client;
     protected AccessCredential accessCredential;
 
@@ -45,6 +45,11 @@ public class CarioSdk {
     }
 
     @SneakyThrows
+    private <T> String convertBodyToString(T tClass) {
+        return objectMapper.writeValueAsString(tClass);
+    }
+
+    @SneakyThrows
     protected URI baseUrl(String path) {
         return new URI(HTTPS +
             BASE_ENDPOINT +
@@ -52,7 +57,8 @@ public class CarioSdk {
     }
 
     @SneakyThrows
-    protected HttpRequest post(URI uri, final String jsonBody) {
+    protected <T> HttpRequest post(URI uri, T tClass) {
+        String jsonBody = convertBodyToString(tClass);
 
         return HttpRequest.newBuilder(uri)
             .header(AUTHORIZATION_HEADER, TOKEN_TYPE_BEARER + accessCredential.getAccessToken())
