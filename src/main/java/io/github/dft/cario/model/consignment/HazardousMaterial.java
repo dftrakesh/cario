@@ -12,6 +12,7 @@ public class HazardousMaterial {
     public String unCode;
     public String properShippingName;
     public String name;
+
     @JsonProperty("class")
     public String hazardousClass;
     public String subsidiaryHazard;

@@ -10,14 +10,19 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 
-import static io.github.dft.cario.constantcode.ConstantCodes.*;
+import static io.github.dft.cario.constantcode.ConstantCodes.BASE_ENDPOINT;
+import static io.github.dft.cario.constantcode.ConstantCodes.HTTPS;
+import static io.github.dft.cario.constantcode.ConstantCodes.AUTHORIZATION_HEADER;
+import static io.github.dft.cario.constantcode.ConstantCodes.ACCEPT;
+import static io.github.dft.cario.constantcode.ConstantCodes.CONTENT_TYPE;
+import static io.github.dft.cario.constantcode.ConstantCodes.TOKEN_TYPE_BEARER;
 
 public class CarioSdk {
 
+    public ObjectMapper objectMapper;
     protected HttpClient client;
     protected AccessCredential accessCredential;
-    private ObjectMapper objectMapper;
-    
+
     public CarioSdk(AccessCredential accessCredential) {
         client = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
@@ -28,7 +33,7 @@ public class CarioSdk {
     public <T> T getRequestWrapped(HttpRequest request, Class<T> tClass) {
 
         return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-            .thenComposeAsync(response -> CompletableFuture.completedFuture(response))
+            .thenComposeAsync(CompletableFuture::completedFuture)
             .thenApplyAsync(HttpResponse::body)
             .thenApplyAsync(responseBody -> convertBody(responseBody, tClass))
             .get();
@@ -41,18 +46,16 @@ public class CarioSdk {
 
     @SneakyThrows
     protected URI baseUrl(String path) {
-        return new URI(new StringBuilder().append(HTTPS)
-            .append(BASE_ENDPOINT)
-            .append(SLASH_CHARACTER)
-            .append(path)
-            .toString());
+        return new URI(HTTPS +
+            BASE_ENDPOINT +
+            path);
     }
 
     @SneakyThrows
     protected HttpRequest post(URI uri, final String jsonBody) {
 
         return HttpRequest.newBuilder(uri)
-            .header(AUTHORIZATION_HEADER, TOKEN_TYPE.concat(accessCredential.getAccessToken()))
+            .header(AUTHORIZATION_HEADER, TOKEN_TYPE_BEARER + accessCredential.getAccessToken())
             .header(CONTENT_TYPE, "application/json")
             .header(ACCEPT, "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(jsonBody))

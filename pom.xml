@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>cario</name>
-    <description>cario API using JDK 11</description>
+    <description>Cario API using JDK 11</description>
     <url>https://github.com/dftrakesh/cario</url>
 
     <licenses>

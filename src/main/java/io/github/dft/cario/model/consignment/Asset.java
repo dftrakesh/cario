@@ -11,6 +11,7 @@ import lombok.Data;
 public class Asset {
     public String code;
     public String name;
+
     @JsonProperty("class")
     public String assetClass;
     public Integer quantity;
