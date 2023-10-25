@@ -8,4 +8,5 @@ public interface ConstantCodes {
     String CONTENT_TYPE = "Content-Type";
     String ACCEPT = "Accept";
     String CONSIGNMENT_ENDPOINT = "Consignment/";
+    String LOCATION_ENDPOINT = "Location/";
 }
