@@ -67,4 +67,13 @@ public class CarioSdk {
             .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
             .build();
     }
+
+    @SneakyThrows
+    protected HttpRequest get(URI uri) {
+        return HttpRequest.newBuilder(uri)
+                .header(AUTHORIZATION_HEADER, TOKEN_TYPE_BEARER + accessCredential.getAccessToken())
+                .header(CONTENT_TYPE, "application/json")
+                .GET()
+                .build();
+    }
 }
