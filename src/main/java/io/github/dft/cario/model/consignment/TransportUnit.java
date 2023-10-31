@@ -17,11 +17,11 @@ public class TransportUnit {
     public String containerType;
     public String reference;
     public Integer quantity;
-    public Integer length;
-    public Integer width;
-    public Integer height;
+    public Double length;
+    public Double width;
+    public Double height;
     public Double volume;
-    public Integer weight;
+    public Double weight;
     public String shortIdentifier;
     public String barcode;
     public String packID;
