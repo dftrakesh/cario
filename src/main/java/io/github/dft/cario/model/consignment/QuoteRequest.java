@@ -11,7 +11,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class QuoteRequest {
     public String id;
-    public Integer customerId;
+    public String customerId;
     public String customerCode;
     public String costCentre;
     public String orderKey;
